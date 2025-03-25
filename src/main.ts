@@ -7,13 +7,9 @@ import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const configService = app.get(ConfigService); // Get ConfigService
   app.useGlobalPipes(new ValidationPipe());
   app.use(graphqlUploadExpress({maxFileSize:1000000, maxFiles: 5}))
-  app.enableCors({
-    origin: configService.get<string>('FRONT_URL'),
-    credentials: true,
-  });
+  app.enableCors();
   await app.listen(process.env.PORT ?? 3001);
 }
 bootstrap();
