@@ -1,0 +1,70 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""solarData"""
+type SolarData {
+  timestamp: String!
+  active_power_kW: Float!
+  energy_kWh: Float!
+}
+
+type Facility {
+  _id: String!
+  name: String!
+  nominalPower: Float!
+  userId: ID!
+  solarData: [SolarData!]
+}
+
+type User {
+  _id: String!
+  name: String!
+  email: String!
+  password: String!
+}
+
+type LoginUserResponse {
+  user: User!
+  authToken: String!
+}
+
+type Query {
+  facilitiesByUser: [Facility!]!
+  facilityById(id: String!): Facility!
+}
+
+type Mutation {
+  createFacility(input: CreateFacilityInput!): Facility!
+  updateFacility(input: UpdateFacilityInput!): Facility!
+  deleteFacility(id: String!): Boolean!
+  login(loginUserInput: LoginUserInput!): LoginUserResponse!
+  signup(signupInput: CreateUserInput!): User!
+}
+
+input CreateFacilityInput {
+  name: String!
+  nominalPower: Float!
+  file: Upload
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input UpdateFacilityInput {
+  id: String!
+  name: String
+  nominalPower: Float
+  file: Upload
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+}
